@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#252C2C">
+
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/friendsProfilePhoto"
+        android:layout_gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/friend"
+        android:layout_marginLeft="15dp"/>
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="25dp">
+
+        <TextView
+            android:id="@+id/friendsUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Maria"
+            android:textSize="20sp"
+            android:textColor="@color/appTextColor"
+            />
+
+        <TextView
+            android:id="@+id/lastMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heyyy dude whats up !!!!"
+            android:textSize="14sp"
+            android:textColor="@color/appTextColor"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/lastChatDate"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yesterday"
+        android:layout_gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/appTextColor"
+        />
+
+</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/appTextColor"
+        />
+
+
+</LinearLayout>
+

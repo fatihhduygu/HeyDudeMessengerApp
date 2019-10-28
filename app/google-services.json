@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1093935943879",
+    "firebase_url": "https://heydudemessengerapplication.firebaseio.com",
+    "project_id": "heydudemessengerapplication",
+    "storage_bucket": "heydudemessengerapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093935943879:android:a2d400f090b368dec22ee2",
+        "android_client_info": {
+          "package_name": "com.fatihduygu.heydudeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093935943879-j7kg8ajlkpm4k18n0qubpv1lbnbe7mpu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fatihduygu.heydudeapp",
+            "certificate_hash": "0bf3914ba91ac912b2a1f0aa70c45e4521bb1aea"
+          }
+        },
+        {
+          "client_id": "1093935943879-l5d7und4st83185umemii8ohq15eda06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK2puexXAca9M77sDUji2irK3HL7CoJyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093935943879-l5d7und4st83185umemii8ohq15eda06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

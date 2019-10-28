@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252C2C">
+
+    <ImageView
+        android:id="@+id/signInThirdPageVerifyImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/verify"
+        android:layout_marginTop="100dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/signInThirdPageLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/signInThirdPageVerifyImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/signInThirdPageText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verify "
+            android:textColor="@color/appTextColor"
+            android:textSize="21sp"
+            android:fontFamily="@font/robotoregular"/>
+
+        <TextView
+            android:id="@+id/signInThirdPagePhoneNumberTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/robotoregular"
+            android:text="+90 (543) 768 14 54 "
+            android:textColor="@color/appTextColor"
+            android:textSize="21sp" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/signInThirdPageLinearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/signInThirdPageLinearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="22dp">
+
+        <TextView
+            android:id="@+id/signInThirdPageText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting to automatically detect an SMS sent to "
+            android:textColor="@color/appTextColor"
+            android:textSize="11sp"
+            android:fontFamily="@font/robotoregular"/>
+
+        <TextView
+            android:id="@+id/signInThirdPagePhoneNumber2Txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+90 (543) 768 14 54"
+            android:textColor="@color/appTextColor"
+            android:textSize="11sp"
+            android:fontFamily="@font/robotomedium"
+            />
+
+    </LinearLayout>
+
+
+        <com.santalu.maskedittext.MaskEditText
+            android:id="@+id/signInThirdPagePhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="4"
+            android:textColor="@color/appTextColor"
+            app:met_mask="###  ### "
+            android:hint="_ _ _  _ _ _"
+            android:maxLines="5"
+            android:textColorHint="@color/appTextColor"
+            app:layout_constraintTop_toTopOf="@+id/signInThirdPageLinearLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp"
+            />
+
+    <ProgressBar
+        android:id="@+id/signInThirdPageProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/buttonColor"
+        app:layout_constraintBottom_toTopOf="@+id/signInThirdPageVerifyBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"/>
+
+
+    <Button
+        android:id="@+id/signInThirdPageVerifyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/next_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="VERIFY"
+        android:textColor="@color/appSecondTextColor"
+        app:layout_constraintTop_toBottomOf="@+id/signInThirdPagePhoneNumber"
+        android:layout_marginTop="100dp"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

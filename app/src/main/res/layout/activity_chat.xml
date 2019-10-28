@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ChatActivity"
+    android:background="@color/layoutColor"
+    android:orientation="vertical">
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="1"
+        android:id="@+id/chat_activity_chatContent_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/chat_activity_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/message_background"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/chat_activity_message_text_et"
+            android:layout_weight="0.8"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="Type a message"
+            android:textSize="14sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/robotoregular"
+            android:textColorHint="@color/appTextColor"
+            android:textColor="@color/appTextColor"
+            android:background="@android:color/transparent"
+            android:maxLines="2" />
+        <Button
+            android:layout_weight="0.2"
+            android:id="@+id/chat_activity_send_message_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/papersent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:onClick="sendMessage"
+            />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

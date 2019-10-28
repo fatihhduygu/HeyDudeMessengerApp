@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252C2C">
+
+    <ImageView
+        android:id="@+id/signInFirstPagePrivacyImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/privacy"
+        android:layout_marginTop="100dp"
+        />
+
+    <TextView
+        android:id="@+id/signInFirstPageText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/signInFirstPagePrivacyImageView"
+        android:text="Welcome to HeyDude Messenger App"
+        android:textColor="@color/appTextColor"
+        android:textSize="21sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/robotoregular"/>
+
+
+    <TextView
+        android:id="@+id/signInFirstPageText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/signInFirstPageText1"
+        android:text="Read our Privacy Policy. Tap &quot;Agree and continue&quot; to accept the "
+        android:textColor="@color/appTextColor"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/robotoregular"/>
+
+    <TextView
+        android:id="@+id/signInFirstPageText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:text="Term of Service"
+        android:fontFamily="@font/robotoregular"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/appTextColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInFirstPageText2"
+        />
+
+
+    <Button
+        android:id="@+id/signInFirstPageAgreeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AGREE AND CONTINUE"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:background="@drawable/next_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/appSecondTextColor"
+        app:layout_constraintTop_toBottomOf="@+id/signInFirstPageText3"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/signInFirstPageText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to HeyDudeApp"
+        android:textColor="@color/appTextColor"
+        android:textSize="9sp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInFirstPageAgreeBtn"
+        android:fontFamily="@font/robotoregular"/>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
