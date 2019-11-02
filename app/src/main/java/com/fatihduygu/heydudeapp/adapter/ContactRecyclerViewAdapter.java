@@ -3,12 +3,16 @@ package com.fatihduygu.heydudeapp.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fatihduygu.heydudeapp.R;
 import com.fatihduygu.heydudeapp.model.UserContactModel;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 
@@ -47,11 +51,13 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
         TextView contactUserNameTxt;
         TextView contactPhoneNumberTxt;
         OnPhoneListener onPhoneListener;
+        ImageView contactProfilePhotoImageView;
 
         public ContactViewHolder(@NonNull View itemView,OnPhoneListener onPhoneClickListener) {
             super(itemView);
             contactUserNameTxt=itemView.findViewById(R.id.contactUserNameTxt);
             contactPhoneNumberTxt=itemView.findViewById(R.id.contactPhoneNumberTxt);
+            contactProfilePhotoImageView=itemView.findViewById(R.id.contactProfilePhoto);
 
             this.onPhoneListener=onPhoneClickListener;
             itemView.setOnClickListener(this);
@@ -60,6 +66,14 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
         public void bindViews(UserContactModel contactModel){
             contactUserNameTxt.setText(contactModel.getUserContactName());
             contactPhoneNumberTxt.setText(contactModel.getUserContactPhoneNumber());
+            if (contactModel.getUserProfileUrl()==null || contactModel.getUserProfileUrl().equals("")){
+                Picasso.get().load("abc").placeholder(R.drawable.kangaroos).error(R.drawable.kangaroos).into(contactProfilePhotoImageView);
+            }else {
+                Transformation transformation=new RoundedTransformationBuilder().oval(true).build();
+                Picasso.get().load(contactModel.getUserProfileUrl()).fit().centerCrop().transform(transformation).error(R.drawable.kangaroos).into(contactProfilePhotoImageView);
+
+            }
+
         }
 
         @Override

@@ -20,6 +20,7 @@ import com.fatihduygu.heydudeapp.model.UserContactModel;
 import com.fatihduygu.heydudeapp.viewmodel.ContactFragmentViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,11 +73,10 @@ public class ContactFragment extends Fragment implements ContactRecyclerViewAdap
     private void observerViews() {
 
         contactFragmentViewModel.getUserContactNameLiveData().observe(getViewLifecycleOwner(), userContactModels -> {
+            contactsInfo.clear();
             contactsInfo.addAll(userContactModels);
-
             RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
             contactRecyclerViewAdapter=new ContactRecyclerViewAdapter(contactsInfo,this);
-
             userContactRecyclerView.setLayoutManager(layoutManager);
             userContactRecyclerView.setAdapter(contactRecyclerViewAdapter);
             contactRecyclerViewAdapter.notifyDataSetChanged();
@@ -86,11 +86,9 @@ public class ContactFragment extends Fragment implements ContactRecyclerViewAdap
     @Override
     public void onPhoneClickListener(int position) {
         UserContactModel userContactModel=contactsInfo.get(position);
-
         Bundle bundle=new Bundle();
         bundle.putString("contactName",userContactModel.getUserContactName());
         bundle.putString("contactPhoneNumber",userContactModel.getUserContactPhoneNumber());
-
         Intent intent=new Intent(getContext(),ChatActivity.class);
         intent.putExtra("contactInfo",bundle);
         startActivity(intent);

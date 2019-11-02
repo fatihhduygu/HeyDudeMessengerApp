@@ -17,7 +17,6 @@
         android:layout_gravity="center"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/friend"
         android:layout_marginLeft="15dp"/>
     <LinearLayout
         android:layout_weight="2"
