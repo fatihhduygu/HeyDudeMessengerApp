@@ -86,7 +86,8 @@ public class ContactFragmentViewModel extends ViewModel {
                 if (dataSnapshot.exists()){
                     String phoneNumber="",
                             userName="",
-                            profileImageUrl="";
+                            profileImageUrl="",
+                            key="";
 
                     for (DataSnapshot childSnapshot:dataSnapshot.getChildren()){
                         if (childSnapshot.child("phoneNumber").getValue()!=null)
@@ -95,10 +96,13 @@ public class ContactFragmentViewModel extends ViewModel {
                             userName=childSnapshot.child("userName").getValue().toString();
                         if (childSnapshot.child("profileImageUrl").getValue()!=null)
                             profileImageUrl=childSnapshot.child("profileImageUrl").getValue().toString();
+                        if (childSnapshot.getKey()!=null)
+                            key=childSnapshot.getKey();
 
-                        UserContactModel mUser=new UserContactModel(mContact.getUserContactName(),phoneNumber,profileImageUrl);
+                        UserContactModel mUser=new UserContactModel(key,mContact.getUserContactName(),phoneNumber,profileImageUrl);
                         userContactsList.add(mUser);
                     }
+
                     Collections.sort(userContactsList,UserContactModel.sortByName);
                     userContactNameLiveData.setValue(userContactsList);
                 }

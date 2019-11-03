@@ -1,5 +1,4 @@
 package com.fatihduygu.heydudeapp.viewmodel;
-
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -7,103 +6,115 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.fatihduygu.heydudeapp.model.ChatModel;
+import com.fatihduygu.heydudeapp.model.MessageModel;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class ChatActivityViewModel extends ViewModel {
 
     //Firebase variable
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private FirebaseDatabase database=FirebaseDatabase.getInstance();
+    private DatabaseReference myRef=database.getReference();
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private FirebaseUser user=mAuth.getCurrentUser();
 
-    private List<ChatModel> allMessages = new ArrayList<>();
-
+    //Variables
+    private ArrayList<MessageModel> allMessages = new ArrayList<>();
 
     //Mutable Live Datas
-    private MutableLiveData<List<ChatModel>> fetchAllMessages=new MutableLiveData<>();
-    private MutableLiveData<String> fetchAllMessagesError=new MutableLiveData<>();
+    private MutableLiveData<ArrayList<MessageModel>> fetchAllMessages=new MutableLiveData<>();
 
-    public LiveData<List<ChatModel>> getAllMessageObservable(){
+
+
+
+    public LiveData<ArrayList<MessageModel>> getAllMessageObservable(){
         return fetchAllMessages;
     }
 
-    public LiveData<String> getAllMessagesErrorObservable(){
-        return fetchAllMessagesError;
+    public void sendMessage(String chatId, String message){
+        sendMessageToFirebase(chatId,message);
+    }
+
+    public void getMessage(String chatId){
+        getMessageToFirebase(chatId);
+    }
+
+    private void getMessageToFirebase(String chatId) {
+        myRef.child("Chat").child(chatId).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.exists()){
+                    String messageId="",creator="",message="",messageDate="";
+
+                    if (dataSnapshot.child("message").getValue()!=null)
+                        message=dataSnapshot.child("message").getValue().toString();
+                    if (dataSnapshot.child("creator").getValue()!=null)
+                        creator=dataSnapshot.child("creator").getValue().toString();
+                    if (dataSnapshot.child("date").getValue()!=null)
+                        messageDate=dataSnapshot.child("date").getValue().toString();
+                    if (dataSnapshot.getKey()!=null)
+                        messageId=dataSnapshot.getKey();
+
+                    MessageModel messageModel=new MessageModel(messageId,creator,message,messageDate,"");
+                    allMessages.add(messageModel);
+                    fetchAllMessages.setValue(allMessages);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
 
 
-    public void sendMessage(String message,String contactPhoneNumber){
-        sendMessageToFirestore(message,contactPhoneNumber);
-    }
-
-    public void getMessage(String contactPhoneNumber){
-        getAllMessages(contactPhoneNumber);
-    }
-
-    private void sendMessageToFirestore(String message,String contactPhoneNumber){
-        String userPhoneNumber=user.getPhoneNumber();
-        String contactPhone=contactPhoneNumber;
-
-        if (message.trim().length()>0){
-            HashMap<String,Object> chatData=new HashMap<>();
-            chatData.put("userPhoneNumber",userPhoneNumber);
-            chatData.put("contactPhoneNumber",contactPhone);
-            chatData.put("userMessage",message);
-            chatData.put("messageDate", FieldValue.serverTimestamp());
 
 
-            db.collection("Chats")
-                    .add(chatData)
-                    .addOnSuccessListener(documentReference -> {
 
-                    })
-                    .addOnFailureListener(e -> {
-
-                    });
+    private void sendMessageToFirebase(String chatId, String message) {
+        if (!message.isEmpty()){
+            DatabaseReference newMessageRef=myRef.child("Chat").child(chatId).push();
+            Map newMessage=new HashMap();
+            newMessage.put("message",message);
+            newMessage.put("creator",user.getUid());
+            newMessage.put("date", ServerValue.TIMESTAMP);
+            newMessageRef.updateChildren(newMessage);
         }
-
     }
-
-
-    private void getAllMessages(String contactPhoneNumber){
-        String userPhone=user.getPhoneNumber();
-        String contactPhone=contactPhoneNumber;
-
-        db.collection("Chats")
-                .orderBy("messageDate", Query.Direction.ASCENDING)
-                .get()
-                .addOnCompleteListener(task -> {
-
-                    if (task.isSuccessful()){
-                        allMessages.clear();
-                        for (QueryDocumentSnapshot document:task.getResult()){
-                            HashMap<String,Object> hashMap= (HashMap<String, Object>) document.getData();
-                            String userPhoneNumber= (String) hashMap.get("userPhoneNumber");
-                            String userMessage= (String) hashMap.get("userMessage");
-                            Timestamp messageDate= (Timestamp) hashMap.get("messageDate");
-                            allMessages.add(new ChatModel(userPhoneNumber,userMessage,messageDate));
-                        }
-                        fetchAllMessages.setValue(allMessages);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    fetchAllMessagesError.setValue(e.getLocalizedMessage());
-                });
-    }
-
-
-
-
-
 }

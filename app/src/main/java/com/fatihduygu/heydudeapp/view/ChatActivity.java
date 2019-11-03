@@ -1,28 +1,22 @@
 package com.fatihduygu.heydudeapp.view;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.fatihduygu.heydudeapp.R;
 import com.fatihduygu.heydudeapp.adapter.ChatRecyclerViewAdapter;
-import com.fatihduygu.heydudeapp.model.ChatModel;
+import com.fatihduygu.heydudeapp.model.MessageModel;
 import com.fatihduygu.heydudeapp.viewmodel.ChatActivityViewModel;
 import java.util.ArrayList;
-import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,10 +30,11 @@ public class ChatActivity extends AppCompatActivity {
     EditText messageText;
 
     //Variables
+    private String contactName,chatId,contactPhoneNumber,contactUId;
     private ChatRecyclerViewAdapter chatRecyclerViewAdapter;
-    private ArrayList<String> chatMessagesList;
-    private String contactName;
-    private String contactPhoneNumber;
+    private ArrayList<MessageModel> chatMessagesList;
+    private RecyclerView.LayoutManager recyclerViewManager;
+
 
     //ViewModel
     private ChatActivityViewModel chatActivityViewModel;
@@ -49,58 +44,63 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+
         Intent intent=getIntent();
-        Bundle bundle=intent.getBundleExtra("contactInfo");
-        if (bundle!=null){
-            contactName=bundle.getString("contactName");
-            contactPhoneNumber=bundle.getString("contactPhoneNumber");
-            //Toast.makeText(this, contactName+": "+contactPhoneNumber, Toast.LENGTH_SHORT).show();
+        Bundle contactBundle=intent.getBundleExtra("contactInfo");
+        Bundle connectionBundle=intent.getBundleExtra("connectionInfo");
+
+        if (contactBundle!=null){
+            contactName=contactBundle.getString("contactName");
+            contactPhoneNumber=contactBundle.getString("contactPhoneNumber");
+            contactUId=contactBundle.getString("contactKey");
+            chatId=contactBundle.getString("chatId");
             getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#B5A6A6\">"+contactName+"</font>"));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
+        if (connectionBundle!=null){
+            chatId=connectionBundle.getString("chatId");
+            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#B5A6A6\">"+chatId+"</font>"));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         ButterKnife.bind(this);
-        chatMessagesList= new ArrayList<>();
-        chatRecyclerViewAdapter=new ChatRecyclerViewAdapter(chatMessagesList);
+
+
+
+        //View-Model
         chatActivityViewModel= ViewModelProviders.of(this).get(ChatActivityViewModel.class);
-        chatActivityViewModel.getMessage(contactPhoneNumber);
+        chatActivityViewModel.getMessage(chatId);
         observerViews();
 
-        //Recycler View  Data Binding Process
-        RecyclerView.LayoutManager recyclerViewManager=new LinearLayoutManager(getApplicationContext());
+        //Recycler View Initialize
+        initializeRecyclerView();
+    }
+
+    private void initializeRecyclerView() {
+        chatMessagesList= new ArrayList<>();
+        chatRecyclerViewAdapter=new ChatRecyclerViewAdapter(chatMessagesList);
+        recyclerViewManager=new LinearLayoutManager(getApplicationContext());
         chatContentRecyclerView.setLayoutManager(recyclerViewManager);
         chatContentRecyclerView.setItemAnimator(new DefaultItemAnimator());
         chatContentRecyclerView.setAdapter(chatRecyclerViewAdapter);
+
     }
 
     private void observerViews() {
-        chatActivityViewModel.getAllMessageObservable().observe(this, new Observer<List<ChatModel>>() {
-            @Override
-            public void onChanged(List<ChatModel> chatModels) {
-                chatMessagesList.clear();
-                for (ChatModel messageItem :chatModels){
-                    chatMessagesList.add(messageItem.getUserPhoneNumber()+": "+messageItem.getUserMessage());
-                }
-                chatContentRecyclerView.scrollToPosition(chatMessagesList.size()-1);
-                chatRecyclerViewAdapter.notifyDataSetChanged();
-            }
+        chatActivityViewModel.getAllMessageObservable().observe(this, messageModels -> {
+            chatMessagesList.clear();
+            chatMessagesList.addAll(messageModels);
+            recyclerViewManager.scrollToPosition(chatMessagesList.size()-1);
+            chatRecyclerViewAdapter.notifyDataSetChanged();
         });
-
-        chatActivityViewModel.getAllMessagesErrorObservable().observe(this, s -> {
-            Toast.makeText(this, "Error : "+s, Toast.LENGTH_SHORT).show();
-            Log.d("Fatih", "observerViews: Error : "+s);
-        });
-
-
     }
+
     public void sendMessage(View view) {
         String messageToSend=messageText.getText().toString().trim();
-        chatActivityViewModel.sendMessage(messageToSend,contactPhoneNumber);
-        chatActivityViewModel.getMessage(contactPhoneNumber);
+        chatActivityViewModel.sendMessage(chatId,messageToSend);
         messageText.setText("");
     }
-
 
 
 

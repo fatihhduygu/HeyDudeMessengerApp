@@ -3,9 +3,9 @@ package com.fatihduygu.heydudeapp.model;
 import java.util.Comparator;
 
 public class UserContactModel {
+    private String uId;
     private String userContactName;
     private String userContactPhoneNumber;
-
     private String userProfileUrl;
 
     public UserContactModel(String userContactName, String userContactPhoneNumber) {
@@ -13,7 +13,8 @@ public class UserContactModel {
         this.userContactPhoneNumber = userContactPhoneNumber;
     }
 
-    public UserContactModel(String userContactName, String userContactPhoneNumber,String userProfileUrl) {
+    public UserContactModel(String uId, String userContactName, String userContactPhoneNumber,String userProfileUrl) {
+        this.uId=uId;
         this.userContactName = userContactName;
         this.userContactPhoneNumber = userContactPhoneNumber;
         this.userProfileUrl=userProfileUrl;
@@ -41,6 +42,14 @@ public class UserContactModel {
 
     public void setUserProfileUrl(String userProfileUrl) {
         this.userProfileUrl = userProfileUrl;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 
     public static Comparator<UserContactModel> sortByName = (s1, s2) -> {

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,10 +17,9 @@ import com.fatihduygu.heydudeapp.R;
 import com.fatihduygu.heydudeapp.adapter.ContactRecyclerViewAdapter;
 import com.fatihduygu.heydudeapp.model.UserContactModel;
 import com.fatihduygu.heydudeapp.viewmodel.ContactFragmentViewModel;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -86,9 +84,15 @@ public class ContactFragment extends Fragment implements ContactRecyclerViewAdap
     @Override
     public void onPhoneClickListener(int position) {
         UserContactModel userContactModel=contactsInfo.get(position);
+
+        String key= FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("chat").child(key).setValue(true);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(userContactModel.getuId()).child("chat").child(key).setValue(true);
         Bundle bundle=new Bundle();
         bundle.putString("contactName",userContactModel.getUserContactName());
         bundle.putString("contactPhoneNumber",userContactModel.getUserContactPhoneNumber());
+        bundle.putString("contactKey",userContactModel.getuId());
+        bundle.putString("chatId",key);
         Intent intent=new Intent(getContext(),ChatActivity.class);
         intent.putExtra("contactInfo",bundle);
         startActivity(intent);
