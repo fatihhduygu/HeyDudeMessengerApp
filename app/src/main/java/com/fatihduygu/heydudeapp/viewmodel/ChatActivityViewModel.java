@@ -1,13 +1,10 @@
 package com.fatihduygu.heydudeapp.viewmodel;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.fatihduygu.heydudeapp.model.MessageModel;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -16,7 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +45,7 @@ public class ChatActivityViewModel extends ViewModel {
     public void getMessage(String chatId){
         getMessageToFirebase(chatId);
     }
+
 
     private void getMessageToFirebase(String chatId) {
         myRef.child("Chat").child(chatId).addChildEventListener(new ChildEventListener() {
@@ -92,20 +89,7 @@ public class ChatActivityViewModel extends ViewModel {
 
             }
         });
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
 
     private void sendMessageToFirebase(String chatId, String message) {
         if (!message.isEmpty()){

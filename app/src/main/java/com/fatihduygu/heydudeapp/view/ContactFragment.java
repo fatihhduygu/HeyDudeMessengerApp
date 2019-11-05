@@ -84,10 +84,21 @@ public class ContactFragment extends Fragment implements ContactRecyclerViewAdap
     @Override
     public void onPhoneClickListener(int position) {
         UserContactModel userContactModel=contactsInfo.get(position);
-
+        String creator=FirebaseAuth.getInstance().getUid();
+        String otherUser=userContactModel.getuId();
         String key= FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("chat").child(key).setValue(true);
-        FirebaseDatabase.getInstance().getReference().child("Users").child(userContactModel.getuId()).child("chat").child(key).setValue(true);
+
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(creator).child("chat").child(key).setValue(true);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(otherUser).child("chat").child(key).setValue(true);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(creator).child("chat").child(key).child("user1").setValue(creator);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(creator).child("chat").child(key).child("user2").setValue(otherUser);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(otherUser).child("chat").child(key).child("user1").setValue(creator);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(otherUser).child("chat").child(key).child("user2").setValue(otherUser);
+
+
         Bundle bundle=new Bundle();
         bundle.putString("contactName",userContactModel.getUserContactName());
         bundle.putString("contactPhoneNumber",userContactModel.getUserContactPhoneNumber());

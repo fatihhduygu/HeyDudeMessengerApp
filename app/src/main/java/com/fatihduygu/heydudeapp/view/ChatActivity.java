@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -60,11 +61,15 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         if (connectionBundle!=null){
+            contactName=connectionBundle.getString("contactName");
+            contactPhoneNumber=connectionBundle.getString("contactPhoneNumber");
+            contactUId=connectionBundle.getString("contactKey");
             chatId=connectionBundle.getString("chatId");
-            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#B5A6A6\">"+chatId+"</font>"));
+            getSupportActionBar().setTitle(Html.fromHtml("<font color=\"#B5A6A6\">"+contactName+"</font>"));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         ButterKnife.bind(this);
+        messageText.setOnKeyListener(keyListener);
 
 
 
@@ -110,5 +115,15 @@ public class ChatActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    View.OnKeyListener keyListener= (view, keyCode, keyEvent) -> {
+        if ((keyEvent.getAction()==KeyEvent.ACTION_DOWN) && (keyCode==KeyEvent.KEYCODE_ENTER)){
+            String messageToSend=messageText.getText().toString().trim();
+            chatActivityViewModel.sendMessage(chatId,messageToSend);
+            messageText.setText("");
+            return true;
+        }
+        return false;
+    };
 
 }

@@ -106,7 +106,7 @@ public class ProfileFragment extends Fragment {
             Transformation transformation=new RoundedTransformationBuilder().oval(true).build();
             Picasso.get().load(profileImageUrl).fit().centerCrop().transform(transformation).error(R.drawable.kangaroos).into(userProfileImageView);
             if (profileImageUrl==null){
-                Picasso.get().load(profileImageUrl).placeholder(R.drawable.kangaroos).error(R.drawable.kangaroos).into(userProfileImageView);
+                Picasso.get().load(profileImageUrl).placeholder(R.drawable.logo1).error(R.drawable.logo1).into(userProfileImageView);
             }
 
 

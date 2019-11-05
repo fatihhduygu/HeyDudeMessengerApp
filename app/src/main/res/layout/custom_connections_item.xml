@@ -17,11 +17,12 @@
         android:layout_gravity="center"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:background="@drawable/friend"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp" />
+
+
 
     <LinearLayout
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:layout_gravity="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,8 +49,8 @@
             />
     </LinearLayout>
         <LinearLayout
-            android:layout_weight="0.3"
-            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:layout_gravity="top"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -59,9 +60,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yesterday"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="right|center"
                 android:layout_marginRight="15dp"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textColor="@color/appTextColor"/>
     </LinearLayout>
 
@@ -69,7 +71,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/appTextColor"
+        android:background="@color/appSecondTextColor"
         />
 
 

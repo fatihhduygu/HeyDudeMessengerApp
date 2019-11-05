@@ -88,7 +88,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         Transformation transformation=new RoundedTransformationBuilder().oval(true).build();
         Picasso.get().load(ProfileFragment.profileImageUrl).fit().centerCrop().transform(transformation).error(R.drawable.kangaroos).into(userProfileImageView);
         if (ProfileFragment.profileImageUrl==null){
-            Picasso.get().load(ProfileFragment.profileImageUrl).placeholder(R.drawable.kangaroos).error(R.drawable.kangaroos).into(userProfileImageView);
+            Picasso.get().load(ProfileFragment.profileImageUrl).placeholder(R.drawable.logo1).error(R.drawable.logo1).into(userProfileImageView);
         }
 
     }

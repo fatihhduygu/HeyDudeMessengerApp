@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.fatihduygu.heydudeapp.R;
 import com.fatihduygu.heydudeapp.adapter.ConnectionRecyclerViewAdapter;
 import com.fatihduygu.heydudeapp.model.ChatObject;
@@ -27,6 +29,9 @@ public class ConnectionsFragment extends Fragment implements ConnectionRecyclerV
     @BindView(R.id.connection_fragment_recycler_view)
     RecyclerView connectionRecyclerView;
 
+    @BindView(R.id.connections_fragment_refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+
 
     public static ConnectionsFragment newInstance() {
         ConnectionsFragment fragment = new ConnectionsFragment();
@@ -38,6 +43,13 @@ public class ConnectionsFragment extends Fragment implements ConnectionRecyclerV
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_connections,container,false);
         ButterKnife.bind(this,view);
+
+        refreshLayout.setOnRefreshListener(() -> {
+            connectionFragmentViewModel.getChatList();
+            refreshLayout.setRefreshing(false);
+        });
+
+
         chatsArrayList=new ArrayList<>();
         connectionFragmentViewModel= ViewModelProviders.of(getActivity()).get(ConnectionFragmentViewModel.class);
         connectionFragmentViewModel.getChatList();
@@ -63,6 +75,9 @@ public class ConnectionsFragment extends Fragment implements ConnectionRecyclerV
         ChatObject chatObject=chatsArrayList.get(position);
         Bundle bundle=new Bundle();
         bundle.putString("chatId",chatObject.getChatId());
+        bundle.putString("contactName",chatObject.getFriendName());
+        bundle.putString("contactPhoneNumber",chatObject.getFriendPhoneNumber());
+        bundle.putString("contactKey",chatObject.getFriendId());
 
         Intent intent=new Intent(getContext(),ChatActivity.class);
         intent.putExtra("connectionInfo",bundle);

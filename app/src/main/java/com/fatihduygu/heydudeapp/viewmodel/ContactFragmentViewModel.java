@@ -99,7 +99,7 @@ public class ContactFragmentViewModel extends ViewModel {
                         if (childSnapshot.getKey()!=null)
                             key=childSnapshot.getKey();
 
-                        UserContactModel mUser=new UserContactModel(key,mContact.getUserContactName(),phoneNumber,profileImageUrl);
+                        UserContactModel mUser=new UserContactModel(key,userName,phoneNumber,profileImageUrl);
                         userContactsList.add(mUser);
                     }
 
@@ -122,6 +122,5 @@ public class ContactFragmentViewModel extends ViewModel {
                 countryCode=telephonyManager.getNetworkCountryIso();
         return CountryToPhonePrefix.getPhone(countryCode);
     }
-
 
 }

@@ -67,11 +67,10 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
             contactUserNameTxt.setText(contactModel.getUserContactName());
             contactPhoneNumberTxt.setText(contactModel.getUserContactPhoneNumber());
             if (contactModel.getUserProfileUrl()==null || contactModel.getUserProfileUrl().equals("")){
-                Picasso.get().load("abc").placeholder(R.drawable.kangaroos).error(R.drawable.kangaroos).into(contactProfilePhotoImageView);
+                Picasso.get().load("abc").placeholder(R.drawable.logo1).error(R.drawable.logo1).into(contactProfilePhotoImageView);
             }else {
                 Transformation transformation=new RoundedTransformationBuilder().oval(true).build();
                 Picasso.get().load(contactModel.getUserProfileUrl()).fit().centerCrop().transform(transformation).error(R.drawable.kangaroos).into(contactProfilePhotoImageView);
-
             }
 
         }

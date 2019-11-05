@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatViewHolder> {
     private ArrayList<MessageModel> chatMessageList;
-    String userId= FirebaseAuth.getInstance().getUid().toString();
+    String userId= FirebaseAuth.getInstance().getUid();
 
 
     public ChatRecyclerViewAdapter(ArrayList<MessageModel> chatMessageList) {
@@ -46,21 +46,30 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     public class ChatViewHolder extends RecyclerView.ViewHolder {
 
-        TextView rightMessageTxt;
+        //TextView rightMessageTxt;
+        //LinearLayout messageLinearLayoutInRightSide;
+
+        //TextView userName;
         TextView leftMessageTxt;
-        LinearLayout messageLinearLayoutInRightSide;
-        LinearLayout messageLinearLayoutInleftSide;
+        //LinearLayout messageLinearLayoutInLeftSide;
 
 
 
 
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);
+            //rightMessageTxt=itemView.findViewById(R.id.chat_message_item_right_message_txt);
+            //messageLinearLayoutInRightSide=itemView.findViewById(R.id.chat_message_item_right_linear_layout);
+
             leftMessageTxt=itemView.findViewById(R.id.chat_message_item_left_message_txt);
+            //messageLinearLayoutInLeftSide=itemView.findViewById(R.id.chat_message_item_left_linear_layout);
+            //userName=itemView.findViewById(R.id.chat_message_item_user_name);
+
         }
 
         public void bindViews(MessageModel messageItem){
             leftMessageTxt.setText(messageItem.getMessage());
+            //userName.setText(messageItem.getCreator());
         }
     }
 }
